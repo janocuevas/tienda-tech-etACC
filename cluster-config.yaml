@@ -6,6 +6,12 @@ metadata:
   region: us-east-1
   version: "1.29"
 
+vpc:
+  id: "vpc-098e70790079d4fd2"
+  subnets:
+    public:
+      us-east-1a: { id: "subnet-09f1bd171b3127814" }
+      us-east-1b: { id: "subnet-084df002bd3f360c7" }
 iam:
   serviceRoleARN: arn:aws:iam::579651781863:role/LabRole
 
