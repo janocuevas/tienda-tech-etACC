@@ -36,7 +36,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      # REQUERIMIENTO: Bind mounts para el desarrollo local en el front-end [cite: 29]
       - ./tienda-tech-frontend/index.html:/usr/share/nginx/html/index.html
       - ./tienda-tech-frontend/app.js:/usr/share/nginx/html/app.js
       - ./tienda-tech-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
