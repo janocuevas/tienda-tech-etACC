@@ -25,11 +25,15 @@ services:
     depends_on:
       - database
 
-  frontend:
-    build: ./tienda-tech-frontend
-    container_name: tienda-tech-frontend
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
+frontend:
+      build: ./tienda-tech-frontend
+      container_name: tienda-tech-frontend
+      ports:
+        - "80:80"
+      volumes:
+        - ./tienda-tech-frontend/index.html:/usr/share/nginx/html/index.html
+        - ./tienda-tech-frontend/app.js:/usr/share/nginx/html/app.js
+        - ./tienda-tech-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+      depends_on:
+        - backend
       
