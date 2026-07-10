@@ -1,0 +1,19 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: etclustxxx
+  region: us-east-1
+  version: "1.29"
+
+iam:
+  serviceRoleARN: arn:aws:iam::<TU_ACCOUNT_ID>:role/LabRole
+
+managedNodeGroups:
+  - name: nodegroup-etclustxxx
+    instanceType: t3.medium
+    desiredCapacity: 3
+    minSize: 2
+    maxSize: 5
+    iam:
+      instanceRoleARN: arn:aws:iam::<TU_ACCOUNT_ID>:role/LabRole
