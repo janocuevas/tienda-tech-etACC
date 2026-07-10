@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   database:
     image: mysql:8.0
@@ -10,6 +12,9 @@ services:
       - "3306:3306"
     volumes:
       - ./tienda-tech-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+    networks:
+      - tienda-net
 
   backend:
     build: ./tienda-tech-backend
@@ -24,16 +29,27 @@ services:
       DB_PORT: "3306"
     depends_on:
       - database
+    networks:
+      - tienda-net
 
-frontend:
-      build: ./tienda-tech-frontend
-      container_name: tienda-tech-frontend
-      ports:
-        - "80:80"
-      volumes:
-        - ./tienda-tech-frontend/index.html:/usr/share/nginx/html/index.html
-        - ./tienda-tech-frontend/app.js:/usr/share/nginx/html/app.js
-        - ./tienda-tech-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
-      depends_on:
-        - backend
-      
+  frontend:
+    build: ./tienda-tech-frontend
+    container_name: tienda-tech-frontend
+    ports:
+      - "80:80"
+    volumes:
+      # REQUERIMIENTO: Bind mounts para el desarrollo local en el front-end [cite: 29]
+      - ./tienda-tech-frontend/index.html:/usr/share/nginx/html/index.html
+      - ./tienda-tech-frontend/app.js:/usr/share/nginx/html/app.js
+      - ./tienda-tech-frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - tienda-net
+
+volumes:
+  db_data:
+
+networks:
+  tienda-net:
+    driver: bridge
